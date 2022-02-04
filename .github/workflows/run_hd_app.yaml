@@ -1,0 +1,26 @@
+name: Run HD App Bump Version
+on:
+  workflow_dispatch: # Run workflow manually, through the Github Actions Workflow page directly
+    inputs:
+      bump:
+        description: "What bump you want to run?"
+        required: true
+        type: choice
+        default: "build-number-only"
+        options:
+          - build-number-only
+          - patch-bump
+          - minor-bump
+          - major-bump
+
+jobs:
+  patch-bump:
+    name: Bump Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2.3.2
+
+      - name: Generate patch bump
+        run: |
+          node ./scripts/bump-version.js ${{ github.event.inputs.bump != 'build-number-only' && format('--{0}', github.event.inputs.bump) }} --push --release-tag
