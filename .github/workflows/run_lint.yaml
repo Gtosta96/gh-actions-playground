@@ -1,0 +1,40 @@
+name: Run Lint
+
+on:
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: ./
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16]
+
+    steps:
+      - uses: actions/checkout@v2.3.2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache node_modules
+        id: cache-node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ matrix.os }}-${{ matrix.node-version }}-${{ hashFiles('yarn.lock') }}
+
+      - name: Install Dependencies
+        if: steps.cache-node_modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+
+      # - name: ESLint
+      #   run: yarn eslint "./src/**/*.js"
+
+      - name: Prettier
+        run: yarn prettier "./*.js" --check

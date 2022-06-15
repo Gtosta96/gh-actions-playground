@@ -1,0 +1,24 @@
+{
+  "name": "gh-actions-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "yarn prettier"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gtosta96/gh-actions-playground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gtosta96/gh-actions-playground/issues"
+  },
+  "homepage": "https://github.com/Gtosta96/gh-actions-playground#readme",
+  "dependencies": {
+    "prettier": "^2.7.0"
+  }
+}
